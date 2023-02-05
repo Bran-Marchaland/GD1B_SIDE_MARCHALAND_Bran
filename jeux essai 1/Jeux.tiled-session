@@ -1,0 +1,102 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Test_1.json",
+    "expandedProjectPaths": [
+        ".",
+        "src/assets",
+        "src"
+    ],
+    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
+    "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
+        "E:/JV1/LD/Niveau 2D/Tiled/Projet_LD_N°1/TuileP.tsx": {
+            "scaleInDock": 1
+        },
+        "E:/JV1/LD/Niveau 2D/échec/TuilesA.tsx": {
+            "scaleInDock": 1
+        },
+        "E:/JV1/LD/Niveau 2D/échec/TuilesP.tsx": {
+            "scaleInDock": 1
+        },
+        "E:/JV1/LD/Niveau 2D/échec/niveau.tmx": {
+            "scale": 0.37346874999999996,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 801.9412601455946,
+                "y": 1275.8764956907376
+            }
+        },
+        "E:/JV1/LD/Niveau 2D/échec/niveau.tmx#TuileP": {
+            "scaleInDock": 1
+        },
+        "E:/JV1/LD/Tiled/Projet_LD_N°1/TuileP.tsx": {
+            "scaleInDock": 1
+        },
+        "Test_1.json": {
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1286.25,
+                "y": 937
+            }
+        },
+        "Test_1.json#TuileP": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Test_1.json#TuileS": {
+            "scaleInDock": 1
+        },
+        "jeux.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 800.6666666666666,
+                "y": 496
+            }
+        },
+        "jeux.tmx#TuileP": {
+            "scaleInDock": 1
+        },
+        "jeux.tmx#TuileS": {
+            "scaleInDock": 1
+        },
+        "src/TuilesA.tsx": {
+            "scaleInDock": 1
+        },
+        "src/TuilesP.tsx": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau.json": {
+            "scale": 0.37346874999999996,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 566.3124424734331,
+                "y": 801.9412601455946
+            }
+        }
+    },
+    "last.exportedFilePath": "E:/JV1/LD/Niveau 2D/jeux essai 1",
+    "last.imagePath": "E:/JV1/LD/Devoirs/PremierNiveau/Définitif",
+    "map.height": 50,
+    "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 50,
+    "openFiles": [
+        "Test_1.json"
+    ],
+    "project": "Jeux.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "Test_1.json",
+        "jeux.tmx",
+        "E:/JV1/LD/Niveau 2D/échec/niveau.tmx",
+        "src/assets/niveau.json"
+    ],
+    "tileset.embedInMap": true
+}

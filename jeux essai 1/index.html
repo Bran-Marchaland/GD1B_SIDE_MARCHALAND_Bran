@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/><title>Jeu phaser</title>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+        <style type="text/css"> body { margin: 0; }</style>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+        
+        class Example extends Phaser.Scene
+        {
+            constructor ()
+            {
+                super();
+            }
+
+            create ()
+            {
+                this.data.set('health', 3);
+                this.data.set('score', 0);
+
+                var text = this.add.text(100, 100, '', { font: '64px Courier', fill: '#00ff00' });
+
+                text.setText(['health: ' + this.data.get('health')]);
+                text.setText(['score: ' + this.data.get('score')]);
+
+            }
+        }
+
+        
+            var config = {
+                type: Phaser.AUTO,
+                parent: 'phaser-example',
+                width: 1000, height: 600,
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                    gravity: { y: 1000 },
+                    debug: false
+                    }
+                },
+                input:{gamepad:true},
+                scene: {preload: preload, create: create, update: update }
+            };
+
+            // variable gamepad
+            var cursors;
+            var controller = false;
+            var gameOver;
+            gameOver = false;
+            sens = 1;
+            var player;
+            var vie;
+            vie = 3;
+            var boutton;
+            var bouttonB;
+            var bouttonJ;
+            var bouttonO;
+            var bouttonR;
+            var bouttonV;
+            var laser;
+            var laserB;
+            var laserJ;
+            var laserO;
+            var laserR;
+            var laserV;
+            var instantKill;
+
+
+            new Phaser.Game(config);
+            
+            function preload(){
+                this.load.image('robot','src/assets/Robot_pixel_profils.png',
+                { frameWidth: 32, frameHeight: 64 });
+                this.load.image("background", "src/assets/background.png");
+                this.load.image("phaser_assets", "src/assets/TileSet_02.png");
+                this.load.tilemapTiledJSON("niveau", "Test_1.json");
+                //this.load.spritesheet("robot", "src/assets/Robot_pixel_mouvement.png",{
+                //    frameWidth: 32,
+                //    frameHeight: 64
+                //})
+
+            }
+        
+           
+            
+
+            function create(){
+
+                //player = this.add.sprite
+                //mysprite=this.game.add.sprite(player,"robot");
+                //mysprite.frame = 3;
+
+
+
+
+                //anims.create({
+                //    'gauche,'
+                //    s: this.anime.generateFrameNumbers('perso', {start : 5, end:7}),
+                //    Rate: 6,
+                //    t: 1
+                //})
+                this.input.gamepad.once('connected', function (pad) {
+                controller = pad;
+                });
+
+
+                this.add.image(800,800, "background");
+                const carteDuNiveau = this.add.tilemap("niveau");        
+                const tileset = carteDuNiveau.addTilesetImage(
+                    "TuileP",
+                    "phaser_assets"
+                ); 
+            
+                
+
+                const plateforme = carteDuNiveau.createLayer(
+                    "Tuile_principale",
+                    tileset
+                );
+
+
+
+                const obstacle = carteDuNiveau.createLayer(
+                    "roche"
+                );
+
+
+                plateforme.setCollisionByProperty({ estSolide: true }); 
+                this.player = this.physics.add.sprite(1000, 400, 'robot');
+                this.player.setBounce(0);
+                this.player.setCollideWorldBounds(false);
+
+                   
+                this.physics.add.collider(this.player, plateforme);
+
+                this.physics.world.setBounds(0, 0, 1600, 1600); 
+                this.cameras.main.setBounds(0, 0, 1600, 1600);
+                this.cameras.main.zoom = 3;
+                this.cameras.main.startFollow(this.player); 
+
+                this.onWall=false;
+                this.canJump = true;
+
+
+            
+                this.cursors = this.input.keyboard.createCursorKeys();
+
+
+            }
+        
+        
+            function update(){
+            
+                if (gameOver){return;}
+
+                if (this.cursors.left.isDown){ //si la touche gauche est appuyée
+                    this.player.setVelocityX(-150); //alors vitesse négative en X
+                    console.log(this.player.x);
+                }
+                else if (this.cursors.right.isDown){ //sinon si la touche droite est appuyée
+                    this.player.setVelocityX(150); //alors vitesse positive en X
+                    console.log(this.player.x);
+                }
+                else{ // sinon
+                    this.player.setVelocityX(0); //vitesse nulle
+                }
+
+
+
+
+                if ((this.cursors.up.isDown && this.player.body.blocked.down) || (this.cursors.up.isDown && this.onWall==true)){
+                    //si touche haut appuyée ET que le perso touche le sol
+                    this.player.setVelocityY(-450); //alors vitesse verticale négative
+
+                    // ne peut pas sauter
+                    this.canJump = false;
+
+                    // n'est pas sur mur
+                    this.onWall = false;
+                    
+
+
+
+
+                }
+
+
+                if(this.player.body.blocked.down){
+ 
+                    // ne peut pas sauter
+                    this.canJump = true;
+
+                    // n'est pas sur mur
+                    this.onWall = false;
+                }
+
+                if(this.player.body.blocked.right && this.player.body.blocked.down){
+ 
+                    this.sens = -1;
+                }
+
+                if(this.player.body.blocked.right && !this.player.body.blocked.down){
+
+                    this.onWall = true;
+                }
+
+                if(this.player.body.blocked.left && this.player.body.blocked.down){
+                    sens = 1;
+                }
+
+                if(this.player.body.blocked.left && !this.player.body.blocked.down){
+                    this.onWall = true;
+                    
+                }
+
+
+            }
+
+
+            function jump(){
+
+
+
+                this.player.setVelocityY(-800); //alors vitesse verticale négative
+
+                      // is the hero on a wall?
+                    if(this.onWall){
+                    
+                        player.setVelocityX(0);
+                        this.canJump = false;
+                    
+                    }
+                
+                    // hero can't jump anymore
+                    this.canJump = false;
+                
+                    // hero is not on the wall anymore
+                    this.onWall = false;
+            }
+
+
+
+
+            function degats(){
+                if(this.player.collider.monstre){
+                    this.player.vie = vie - -1
+                }
+            }
+
+            
+            function laser(){
+                if (this.player.collider.laser){
+                    vie = 0
+                    gameOver=true
+                    // si condition vrai alors fin de partie
+                }
+
+
+            }
+
+            function tire(){
+                if (this.collider.monstre){
+                    this.monstre=hidden
+                }
+            }
+
+
+            function gameOver(){
+                if(this.player.vie == 0 && this.player.collider.laser == true){
+                    // si condition vrai alors fin de partie
+
+                    gameOver=false
+                    //condition remise sur faux
+                }
+
+                
+            }
+
+            function boutton(){
+                if (this.player.collider.bouttonO){
+                    this.laserO.instantKill=false;
+                    this.laserO = hidden
+                }
+
+                if (this.player.collider.bouttonR){
+                    this.laserR.instantKill=false;
+                    this.laserR = hidden
+                }
+
+                if (this.player.collider.bouttonV){
+                    this.laserV.instantKill=false;
+                    this.laserV = hidden
+                }
+
+                if (this.player.collider.bouttonJ){
+                    this.laserJ.instantKill=false;
+                    this.laserJ = hidden
+                }
+
+                if (this.player.collider.bouttonB){
+                    this.laserB.instantKill=false;
+                    this.laserB = hidden
+                }
+            }
+
+        </script>
+    </body>
+</html>
+
